@@ -1,81 +1,63 @@
 # src/api/market_data.py
 """
-market_data.py
---------------
-Client pour récupérer les données de marché via Binance API.
-Utilise BinanceClient pour effectuer les requêtes.
+Wrapper "Market Data" autour de BinanceClient.
+Aucun requests.get() ici: tout passe par BinanceClient.request().
 """
 
+from __future__ import annotations
+
+from typing import Any, Dict, List, Optional
+
 from src.api.binance_client import BinanceClient
+from src.utils.config import MAX_LIMIT
+
 
 class MarketData:
-    """
-    Classe pour interagir avec les endpoints de marché Binance.
-    """
+    def __init__(self, client: Optional[BinanceClient] = None):
+        self.client = client or BinanceClient()
 
-    def __init__(self):
-        self.client = BinanceClient()  # Réutilise le client générique
+    def get_klines(
+        self,
+        symbol: str,
+        interval: str,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        limit: int = 1000,
+    ) -> List[List[Any]]:
+        """
+        GET /api/v3/klines
+        - start_time / end_time en millisecondes (UTC)
+        - limit max 1000
+        """
+        limit = min(int(limit), MAX_LIMIT)
 
-    def get_klines(self, symbol, interval, start_time=None, end_time=None, limit=500):
-        """
-        Récupère les candlesticks (klines) pour un symbole et un intervalle donné.
-        """
-        endpoint = f"{self.client.base_url}/klines"
-        params = {
+        params: Dict[str, Any] = {
             "symbol": symbol,
             "interval": interval,
-            "limit": limit
+            "limit": limit,
         }
-        if start_time:
-            params["startTime"] = start_time
-        if end_time:
-            params["endTime"] = end_time
+        if start_time is not None:
+            params["startTime"] = int(start_time)
+        if end_time is not None:
+            params["endTime"] = int(end_time)
 
-        import requests
-        response = requests.get(endpoint, params=params)
-        response.raise_for_status()
-        return response.json()
+        return self.client.request("/klines", params=params)
 
-    def get_recent_trades(self, symbol, limit=500):
-        """
-        Récupère les trades récents pour un symbole.
-        """
-        endpoint = f"{self.client.base_url}/trades"
-        params = {"symbol": symbol, "limit": limit}
+    def get_ticker_24h(self, symbol: str) -> Dict[str, Any]:
+        return self.client.request("/ticker/24hr", params={"symbol": symbol})
 
-        import requests
-        response = requests.get(endpoint, params=params)
-        response.raise_for_status()
-        return response.json()
+    def get_recent_trades(self, symbol: str, limit: int = 500) -> List[Dict[str, Any]]:
+        limit = min(int(limit), 1000)
+        return self.client.request("/trades", params={"symbol": symbol, "limit": limit})
 
-    def get_historical_trades(self, symbol, limit=500, from_id=None):
-        """
-        Récupère les anciens trades pour un symbole.
-        """
-        endpoint = f"{self.client.base_url}/historicalTrades"
-        params = {"symbol": symbol, "limit": limit}
-        if from_id:
-            params["fromId"] = from_id
-
-        import requests
-        response = requests.get(endpoint, params=params)
-        response.raise_for_status()
-        return response.json()
-
-    def get_ticker_24h(self, symbol):
-        """
-        Récupère le ticker 24h pour un symbole.
-        """
-        endpoint = f"{self.client.base_url}/ticker/24hr"
-        params = {"symbol": symbol}
-
-        import requests
-        response = requests.get(endpoint, params=params)
-        response.raise_for_status()
-        return response.json()
-
-    def get_order_book(self, symbol, limit=100):
-        """
-        Récupère le carnet d'ordres (order book) pour un symbole via market_data.
-        """
+    def get_order_book(self, symbol: str, limit: int = 100) -> Dict[str, Any]:
         return self.client.get_order_book(symbol, limit)
+
+    def get_ticker_price(self, symbol: str) -> Dict[str, Any]:
+        return self.client.get_ticker_price(symbol)
+
+    def ping(self) -> Dict[str, Any]:
+        return self.client.ping()
+
+    def get_server_time(self) -> Dict[str, Any]:
+        return self.client.get_server_time()

@@ -1,0 +1,67 @@
+{
+  "symbol": "ETHUSDT",
+  "interval": "1h",
+  "model_path": "models/ethusdt_1h_model.joblib",
+  "input_path": "data/processed/ethusdt_1h_ml.parquet",
+  "test_ratio": 0.2,
+  "rows_test": 1728,
+  "accuracy": 0.41724537037037035,
+  "f1_macro": 0.41192232357111136,
+  "labels_order": [
+    "SELL",
+    "HOLD",
+    "BUY"
+  ],
+  "confusion_matrix": [
+    [
+      307,
+      192,
+      170
+    ],
+    [
+      114,
+      247,
+      83
+    ],
+    [
+      160,
+      288,
+      167
+    ]
+  ],
+  "classification_report": {
+    "SELL": {
+      "precision": 0.5283993115318416,
+      "recall": 0.4588938714499253,
+      "f1-score": 0.4912,
+      "support": 669.0
+    },
+    "HOLD": {
+      "precision": 0.33975240715268223,
+      "recall": 0.5563063063063063,
+      "f1-score": 0.4218616567036721,
+      "support": 444.0
+    },
+    "BUY": {
+      "precision": 0.3976190476190476,
+      "recall": 0.27154471544715447,
+      "f1-score": 0.32270531400966185,
+      "support": 615.0
+    },
+    "accuracy": 0.41724537037037035,
+    "macro avg": {
+      "precision": 0.4219235887678571,
+      "recall": 0.4289149644011287,
+      "f1-score": 0.41192232357111136,
+      "support": 1728.0
+    },
+    "weighted avg": {
+      "precision": 0.43338247828489995,
+      "recall": 0.41724537037037035,
+      "f1-score": 0.41341617111827106,
+      "support": 1728.0
+    }
+  },
+  "test_start_timestamp": "2025-10-26 16:00:00+00:00",
+  "test_end_timestamp": "2026-01-06 15:00:00+00:00"
+}

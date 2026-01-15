@@ -1,0 +1,67 @@
+{
+  "symbol": "BTCUSDT",
+  "interval": "1h",
+  "model_path": "models/btcusdt_1h_model.joblib",
+  "input_path": "data/processed/btcusdt_1h_ml.parquet",
+  "test_ratio": 0.2,
+  "rows_test": 1728,
+  "accuracy": 0.36400462962962965,
+  "f1_macro": 0.34113068283616893,
+  "labels_order": [
+    "SELL",
+    "HOLD",
+    "BUY"
+  ],
+  "confusion_matrix": [
+    [
+      263,
+      114,
+      285
+    ],
+    [
+      213,
+      76,
+      233
+    ],
+    [
+      153,
+      101,
+      290
+    ]
+  ],
+  "classification_report": {
+    "SELL": {
+      "precision": 0.41812400635930047,
+      "recall": 0.3972809667673716,
+      "f1-score": 0.407436096049574,
+      "support": 662.0
+    },
+    "HOLD": {
+      "precision": 0.2611683848797251,
+      "recall": 0.14559386973180077,
+      "f1-score": 0.18696186961869618,
+      "support": 522.0
+    },
+    "BUY": {
+      "precision": 0.3589108910891089,
+      "recall": 0.5330882352941176,
+      "f1-score": 0.4289940828402367,
+      "support": 544.0
+    },
+    "accuracy": 0.36400462962962965,
+    "macro avg": {
+      "precision": 0.3460677607760448,
+      "recall": 0.35865435726443007,
+      "f1-score": 0.34113068283616893,
+      "support": 1728.0
+    },
+    "weighted avg": {
+      "precision": 0.35206916311895176,
+      "recall": 0.36400462962962965,
+      "f1-score": 0.34762128043452906,
+      "support": 1728.0
+    }
+  },
+  "test_start_timestamp": "2025-10-26 16:00:00+00:00",
+  "test_end_timestamp": "2026-01-06 15:00:00+00:00"
+}

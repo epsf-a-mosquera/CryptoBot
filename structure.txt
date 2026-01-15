@@ -1,0 +1,53 @@
+.
+├── .venv
+├── README.md
+├── airflow
+├── data
+│   ├── examples
+│   │   ├── example_klines.json
+│   │   ├── example_order_book.json
+│   │   ├── example_recent_trades.json
+│   │   ├── example_server_time.json
+│   │   └── example_ticker_price.json
+│   ├── features
+│   │   └── klines_1h_BTCUSDT_20251223_125952_features.parquet
+│   ├── processed
+│   │   └── klines_1h_BTCUSDT_20251223_125952.parquet
+│   └── raw
+│       ├── klines_1h_BTCUSDT_20251223_125952.json
+│       ├── order_book_BTCUSDT_20251223_125952.json
+│       ├── recent_trades_BTCUSDT_20251223_125952.json
+│       ├── server_time_20251223_125952.json
+│       ├── ticker_24h_BTCUSDT_20251223_125952.json
+│       └── ticker_price_BTCUSDT_20251223_125952.json
+├── docker-compose.yml
+├── docs
+│   └── data_processing.docx
+├── logs
+│   └── clean_data.log
+├── requirements.txt
+├── src
+│   ├── api
+│   │   ├── binance_client.py
+│   │   ├── create_example_files.py
+│   │   ├── fetch_raw_data.py
+│   │   └── market_data.py
+│   ├── api_server
+│   ├── database
+│   ├── ml
+│   ├── preprocessing
+│   │   ├── clean_data.py
+│   │   ├── feature_engineering.py
+│   │   ├── fetch_historical.py
+│   │   ├── fetch_live.py
+│   │   └── load_to_postgresql.py
+│   └── utils
+│       ├── __pycache__
+│       │   └── config.cpython-312.pyc
+│       └── config.py
+├── structure.txt
+└── tests
+    ├── test_binance_client.py
+    └── test_market_data.py
+
+1117 directories, 16081 files
